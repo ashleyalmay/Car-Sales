@@ -1,6 +1,3 @@
-
-
-
 const someState = {
     additionalPrice: 0,
     car: {
@@ -21,43 +18,29 @@ const someState = {
 export const features = (state = someState,action) => {
     switch (action.type){
         case 'DELETE_FEATURES':
-            return{
+            return {
                 ...state,
+                additionalPrice: state.additionalPrice - action.payload.price,
                 car: {
                     ...state.car,
-                    features: state.car.features.filter(features =>{
-                        return features.id !== action.payload.id;
+                    features: state.car.features.filter(item => {
+                        return item.id !== action.payload.id;
                     })
                 },
-                additionalFeatures: [
-                    ...state.additionalFeatures,
-                    action.payload
-            ]    
-        }
+                additionalFeatures: [...state.additionalFeatures, action.payload]
+            }
     case 'ADD_FEATURES':
-        return{
+        return {
             ...state,
+            additionalPrice: state.additionalPrice + action.payload.price,
             car: {
                 ...state.car,
-                features: [
-                    ...state.car.features.includes(action.payload) ?
-                [
-                    ...state.car.features
-                ] : [
-                    ...state.car.features,action.payload
-                ]
-                ]
+                features: [...state.car.features, action.payload]
             },
-            features: state.car.features.filter(features =>{
-                return features.id !== action.payload.id;
-        })
-    }
-    case 'BUY_NOW':
-        return{
-            ...state,
-            additionalPrice: state.additionalPrice + action.payload
+            additionalFeatures: state.additionalFeatures.filter(item => {
+                return item.id !== action.payload.id;
+            })
         }
-        default:
-            return state
-    }
-}
+                default: return state
+            }
+        }

@@ -15,12 +15,3 @@ export const addFeatures = item => {
         payload:item
     }
 }
-
-export const BUY_NOW = 'BUY_NOW';
-
-export const buyNow = item => {
-    return {
-        type: BUY_NOW,
-        payload:item
-    }
-}
